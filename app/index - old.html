@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>bpmn-js-example-model-extension</title>
+
+  <meta charset="utf-8"/>
+
+  <link rel="stylesheet" href="vendor/bpmn-js/assets/diagram-js.css" />
+  <link rel="stylesheet" href="vendor/bpmn-js/assets/bpmn-font/css/bpmn-embedded.css" />
+  <link rel="stylesheet" href="css/app.css" />
+<script type="text/javascript">
+
+	function exportDiagram() {
+		bpmnModeler.saveXML({
+			format : true
+		}, function(err, xml) {
+			if (err) {
+
+				return console.error('could not save BPMN 2.0 diagram', err);
+			}
+			var file = new Blob([ xml ], {
+				type : "bpmn"
+			});
+			if (window.navigator.msSaveOrOpenBlob) // IE10+
+				window.navigator.msSaveOrOpenBlob(file, "NewDiagram.bpmn");
+			else { // Others
+				var a = document.createElement("a"), url = URL
+						.createObjectURL(file);
+				a.href = url;
+				a.download = "NewDiagram.bpmn";
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(function() {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+				}, 0);
+			}
+		});
+	}
+
+	function saveSvg(){
+		bpmnModeler.saveSVG(function(err, svg) {
+		  if (err) {
+
+		    return console.error('could not save BPMN 2.0 diagram', err);
+		  }
+		  var file = new Blob([ svg ], {
+		    type : "svg"
+		  });
+		  if (window.navigator.msSaveOrOpenBlob) // IE10+
+		    window.navigator.msSaveOrOpenBlob(file, "NewDiagram.svg");
+		  else { // Others
+		    var a = document.createElement("a"), url = URL
+		        .createObjectURL(file);
+		    a.href = url;
+		    a.download = "NewDiagram.svg";
+		    document.body.appendChild(a);
+		    a.click();
+		    setTimeout(function() {
+		      document.body.removeChild(a);
+		      window.URL.revokeObjectURL(url);
+		    }, 0);
+		  }
+		});
+	}
+
+	function loadDiagram(xml) {
+		var file = xml[0];
+		if (file) {
+		    var reader = new FileReader();
+		    reader.readAsText(file, "UTF-8");
+		    reader.onload = function (evt) {
+
+		        var bpmnXML = evt.target.result;
+		        bpmnModeler.importXML(bpmnXML, function(err) {
+					if (err) {
+						return console.error('could not import BPMN 2.0 diagram', err);
+					}
+					// access bpmnModeler components
+					var canvas = bpmnModeler.get('canvas');
+					var overlays = bpmnModeler.get('overlays');
+					// zoom to fit full viewport
+					canvas.zoom('fit-viewport');
+				});
+		    }
+		    reader.onerror = function (evt) {
+		        document.getElementById("fileContents").innerHTML = "error reading file";
+		    }
+
+    }
+	}
+	function myFunction() {
+	  var x = document.getElementById("myTopnav");
+	  if (x.className === "topnav") {
+	    x.className += " responsive";
+	  } else {
+	    x.className = "topnav";
+	  }
+	}
+</script>
+</head>
+<body>
+  <div class="topnav" id="myTopnav">
+		<a href="#" id="load"><input type="file" accept=".bpmn" name="newDiagram" id="newDiagram" multiple="false" onchange="loadDiagram(this.files)"><i class="fa fa-upload"></i></a>
+		<a href="#" id="save" onclick="exportDiagram();">Save <i class="fa fa-download"></i></a>
+  	</div>
+<div id="container"></div>
+
+  <div id="quality-assurance" class="panel hidden">
+    <form id="form">
+      <p>
+        <b>Suitability Score</b>
+      </p>
+      <br />
+      <input id="suitability-score" type="text" placeholder="100" autocomplete="off">
+      <br />
+      <br />
+      <p id="warning" class="hidden">
+        Suitability Score must be a number
+      </p>
+      <br />
+      <p>
+        <b>Last Checked</b>
+      </p>
+      <br />
+      <p id="last-checked">
+        -
+      </p>
+      <br />
+      <input id="okay" type="submit" value="Okay">
+    </form>
+  </div>
+
+  <div id="hint" class="panel">Click <b>right mouse button</b> to edit properties.</div>
+
+  <script src="app.js"></script>
+</html>

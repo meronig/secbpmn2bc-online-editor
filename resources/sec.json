@@ -1,0 +1,108 @@
+{
+  "name": "SecBPMN",
+  "uri": "http://some-company/schema/bpmn/sec",
+  "prefix": "sec",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "BCTask",
+      "extends": [
+        "bpmn:Task"
+      ],
+      "properties": [
+        {
+          "name": "onChainExecution",
+          "isAttr": true,
+          "type": "Boolean"
+        }
+      ]
+    },
+    {
+      "name": "BCProcess",
+      "extends": [
+        "bpmn:Process"
+      ],
+      "properties": [
+        {
+          "name": "onChainModel",
+          "isAttr": true,
+          "type": "Boolean"
+        }
+      ]
+    },
+	{
+      "name": "BCSubProcess",
+      "extends": [
+        "bpmn:SubProcess"
+      ],
+      "properties": [
+        {
+          "name": "onChainModel",
+          "isAttr": true,
+          "type": "Boolean"
+        }
+      ]
+    },
+	{
+      "name": "BCDefinitions",
+      "extends": [
+        "bpmn:Definitions"
+      ],
+      "properties": [
+        {
+          "name": "onChainModel",
+          "isAttr": true,
+          "type": "Boolean"
+        },
+		{
+          "name": "blockchainType",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+	{
+      "name": "BCMessage",
+      "extends": [
+        "bpmn:Message"
+      ],
+      "properties": [
+        {
+          "name": "onChainData",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+	{
+      "name": "BCDataObject",
+      "extends": [
+        "bpmn:DataObject"
+      ],
+      "properties": [
+        {
+          "name": "onChainData",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+	{
+      "name": "BCAnnotation",
+      "extends": [
+        "bpmn:TextAnnotation"
+      ],
+      "properties": [
+        {
+          "name": "type",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ],
+  "emumerations": [],
+  "associations": []
+}
