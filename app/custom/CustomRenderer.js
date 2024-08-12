@@ -20,6 +20,7 @@ import enforceabilityPublic from './shapes/enforceabilityPublic.svg';
 import enforceabilityPrivate from './shapes/enforceabilityPrivate.svg';
 import enforceabilityUserDefined from './shapes/enforceabilityUserDefined.svg';
 
+import chain from './shapes/chain.svg';
 
 import {
   append as svgAppend,
@@ -58,13 +59,19 @@ export default class CustomRenderer extends BaseRenderer {
 
     // ignore labels
     //return !element.labelTarget;
-    return is(element, 'bpmn:TextAnnotation');
+    return is(element, 'bpmn:TextAnnotation') ||
+    is(element, 'bpmn:DataObjectReference') ||
+    is(element, 'bpmn:DataStoreReference') ||
+    is(element, 'bpmn:Task');
+
 
   }
 
   drawShape(parentNode, element) {
 
     const type = this.getType(element);
+    const onChainExecution = this.getOnChainExecution(element);
+    const onChainData = this.getOnChainData(element);
 
     let shape;
 
@@ -75,69 +82,77 @@ export default class CustomRenderer extends BaseRenderer {
 
       switch (type) {
         case 'Accountability':
-          shape = drawAnnotation(parentNode, element.width, element.height, accountability);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, accountability);
           break;
         case 'Auditability':
-          shape = drawAnnotation(parentNode, element.width, element.height, auditability);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, auditability);
           break;
         case 'Authenticity':
-          shape = drawAnnotation(parentNode, element.width, element.height, authenticity);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, authenticity);
           break;
         case 'Availability':
-          shape = drawAnnotation(parentNode, element.width, element.height, availability);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, availability);
           break;
         case 'BoD':
-          shape = drawAnnotation(parentNode, element.width, element.height, bod);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, bod);
           break;
         case 'Confidentiality':
-          shape = drawAnnotation(parentNode, element.width, element.height, confidentiality);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, confidentiality);
           break;
         case 'Integrity':
-          shape = drawAnnotation(parentNode, element.width, element.height, integrity);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, integrity);
           break;
         case 'NonDelegation':
-          shape = drawAnnotation(parentNode, element.width, element.height, nonDelegation);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, nonDelegation);
           break;
         case 'NonRepudiation':
-          shape = drawAnnotation(parentNode, element.width, element.height, nonRepudiation);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, nonRepudiation);
           break;
         case 'Privacy':
-          shape = drawAnnotation(parentNode, element.width, element.height, privacy);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privacy);
           break;
         case 'SoD':
-          shape = drawAnnotation(parentNode, element.width, element.height, sod);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, sod);
           break;
         case 'PrivityPublic':
-          shape = drawAnnotation(parentNode, element.width, element.height, privityPublic);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privityPublic);
           break;
         case 'PrivityPrivate':
-          shape = drawAnnotation(parentNode, element.width, element.height, privityPrivate);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privityPrivate);
           break;
         case 'PrivityStatic':
-          shape = drawAnnotation(parentNode, element.width, element.height, privityStatic);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privityStatic);
           break;
         case 'PrivityWeakDynamic':
-          shape = drawAnnotation(parentNode, element.width, element.height, privityWeakDynamic);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privityWeakDynamic);
           break;
         case 'PrivityStrongDynamic':
-          shape = drawAnnotation(parentNode, element.width, element.height, privityStrongDynamic);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, privityStrongDynamic);
           break;
         case 'EnforceabilityPublic':
-          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityPublic);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, enforceabilityPublic);
           break;
         case 'EnforceabilityPrivate':
-          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityPrivate);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, enforceabilityPrivate);
           break;
         case 'EnforceabilityUserDefined':
-          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityUserDefined);
+          shape = drawBCAnnotation(parentNode, element.width, element.height, enforceabilityUserDefined);
           break;
         default:
           shape = this.bpmnRenderer.drawShape(parentNode, element);
       }
     } else {
       shape = this.bpmnRenderer.drawShape(parentNode, element);
+      if (onChainExecution) {
+        drawChain(parentNode, element.width, element.height);
+      } else if (!isNil(onChainData)){
+        if (onChainData!='None') {
+          drawChain(parentNode, element.width, element.height);
+        }
+      }
     }
 
+    
 
     return shape;
   }
@@ -149,6 +164,22 @@ export default class CustomRenderer extends BaseRenderer {
 
     return type;
   }
+
+  getOnChainExecution(element) {
+    const businessObject = getBusinessObject(element);
+
+    const { onChainExecution } = businessObject;
+
+    return onChainExecution;
+  }
+
+  getOnChainData(element) {
+    const businessObject = getBusinessObject(element);
+
+    const { onChainData } = businessObject;
+
+    return onChainData;
+  }
 }
 
 CustomRenderer.$inject = ['eventBus', 'bpmnRenderer'];
@@ -156,7 +187,7 @@ CustomRenderer.$inject = ['eventBus', 'bpmnRenderer'];
 // helpers //////////
 
 // copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
-function drawAnnotation(parentNode, width, height, type) {
+function drawBCAnnotation(parentNode, width, height, type) {
 
 
   const rect = svgCreate('image', {
@@ -165,6 +196,21 @@ function drawAnnotation(parentNode, width, height, type) {
     width: width,
     height: height,
     href: type
+  });
+
+  svgAppend(parentNode, rect);
+
+  return rect;
+}
+
+function drawChain(parentNode, width, height) {
+
+  const rect = svgCreate('image', {
+    x: 0,
+    y: 0,
+    width: width,
+    height: height,
+    href: chain
   });
 
   svgAppend(parentNode, rect);
