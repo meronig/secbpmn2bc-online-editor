@@ -6,6 +6,19 @@ import availability from './shapes/availability.svg';
 import bod from './shapes/bod.svg';
 import confidentiality from './shapes/confidentiality.svg';
 import integrity from './shapes/integrity.svg';
+import nonDelegation from './shapes/nonDelegation.svg';
+import nonRepudiation from './shapes/nonRepudiation.svg';
+import privacy from './shapes/privacy.svg';
+import sod from './shapes/sod.svg';
+
+import privityPublic from './shapes/privityPublic.svg';
+import privityPrivate from './shapes/privityPrivate.svg';
+import privityStatic from './shapes/privityStatic.svg';
+import privityWeakDynamic from './shapes/privityWeakDynamic.svg';
+import privityStrongDynamic from './shapes/privityStrongDynamic.svg';
+import enforceabilityPublic from './shapes/enforceabilityPublic.svg';
+import enforceabilityPrivate from './shapes/enforceabilityPrivate.svg';
+import enforceabilityUserDefined from './shapes/enforceabilityUserDefined.svg';
 
 
 import {
@@ -81,6 +94,42 @@ export default class CustomRenderer extends BaseRenderer {
           break;
         case 'Integrity':
           shape = drawAnnotation(parentNode, element.width, element.height, integrity);
+          break;
+        case 'NonDelegation':
+          shape = drawAnnotation(parentNode, element.width, element.height, nonDelegation);
+          break;
+        case 'NonRepudiation':
+          shape = drawAnnotation(parentNode, element.width, element.height, nonRepudiation);
+          break;
+        case 'Privacy':
+          shape = drawAnnotation(parentNode, element.width, element.height, privacy);
+          break;
+        case 'SoD':
+          shape = drawAnnotation(parentNode, element.width, element.height, sod);
+          break;
+        case 'PrivityPublic':
+          shape = drawAnnotation(parentNode, element.width, element.height, privityPublic);
+          break;
+        case 'PrivityPrivate':
+          shape = drawAnnotation(parentNode, element.width, element.height, privityPrivate);
+          break;
+        case 'PrivityStatic':
+          shape = drawAnnotation(parentNode, element.width, element.height, privityStatic);
+          break;
+        case 'PrivityWeakDynamic':
+          shape = drawAnnotation(parentNode, element.width, element.height, privityWeakDynamic);
+          break;
+        case 'PrivityStrongDynamic':
+          shape = drawAnnotation(parentNode, element.width, element.height, privityStrongDynamic);
+          break;
+        case 'EnforceabilityPublic':
+          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityPublic);
+          break;
+        case 'EnforceabilityPrivate':
+          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityPrivate);
+          break;
+        case 'EnforceabilityUserDefined':
+          shape = drawAnnotation(parentNode, element.width, element.height, enforceabilityUserDefined);
           break;
         default:
           shape = this.bpmnRenderer.drawShape(parentNode, element);

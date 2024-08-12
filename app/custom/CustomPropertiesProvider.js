@@ -26,7 +26,7 @@ export default function CustomPropertiesProvider(propertiesPanel, translate) {
    *
    * @return {(Object[]) => (Object[])} groups middleware
    */
-  this.getGroups = function(element) {
+  this.getGroups = function (element) {
 
     /**
      * We return a middleware that modifies
@@ -36,11 +36,16 @@ export default function CustomPropertiesProvider(propertiesPanel, translate) {
      *
      * @return {Object[]} modified groups
      */
-    return function(groups) {
+    return function (groups) {
 
       // Add the "magic" group
-      if (is(element, 'bpmn:TextAnnotation') || is(element, 'bpmn:Task')
-		  ) {
+      if (is(element, 'bpmn:TextAnnotation') || 
+      is(element, 'bpmn:Task') || 
+      is(element, 'bpmn:DataObjectReference') || is(element, 'bpmn:DataStoreReference') || 
+      is(element, 'bpmn:MessageFlow') ||
+      is(element, 'bpmn:Collaboration') ||
+      is(element, 'bpmn:SubProcess') || is(element, 'bpmn:Participant')
+      ) {
         groups.push(createBcGroup(element, translate));
       }
 
@@ -57,7 +62,7 @@ export default function CustomPropertiesProvider(propertiesPanel, translate) {
   propertiesPanel.registerProvider(LOW_PRIORITY, this);
 }
 
-CustomPropertiesProvider.$inject = [ 'propertiesPanel', 'translate' ];
+CustomPropertiesProvider.$inject = ['propertiesPanel', 'translate'];
 
 // Create the custom magic group
 function createBcGroup(element, translate) {

@@ -20,9 +20,9 @@
       ]
     },
     {
-      "name": "BCProcess",
+      "name": "BCParticipant",
       "extends": [
-        "bpmn:Process"
+        "bpmn:Participant"
       ],
       "properties": [
         {
@@ -32,7 +32,7 @@
         }
       ]
     },
-	{
+    {
       "name": "BCSubProcess",
       "extends": [
         "bpmn:SubProcess"
@@ -45,10 +45,10 @@
         }
       ]
     },
-	{
-      "name": "BCDefinitions",
+    {
+      "name": "BCCollaboration",
       "extends": [
-        "bpmn:Definitions"
+        "bpmn:Collaboration"
       ],
       "properties": [
         {
@@ -56,17 +56,17 @@
           "isAttr": true,
           "type": "Boolean"
         },
-		{
+        {
           "name": "blockchainType",
           "isAttr": true,
           "type": "String"
         }
       ]
     },
-	{
-      "name": "BCMessage",
+    {
+      "name": "BCMessageFlow",
       "extends": [
-        "bpmn:Message"
+        "bpmn:MessageFlow"
       ],
       "properties": [
         {
@@ -76,10 +76,10 @@
         }
       ]
     },
-	{
-      "name": "BCDataObject",
+    {
+      "name": "BCDataObjectReference",
       "extends": [
-        "bpmn:DataObject"
+        "bpmn:DataObjectReference"
       ],
       "properties": [
         {
@@ -89,7 +89,20 @@
         }
       ]
     },
-	{
+    {
+      "name": "BCDataStoreReference",
+      "extends": [
+        "bpmn:DataStoreReference"
+      ],
+      "properties": [
+        {
+          "name": "onChainData",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
       "name": "BCAnnotation",
       "extends": [
         "bpmn:TextAnnotation"

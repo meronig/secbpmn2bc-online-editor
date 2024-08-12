@@ -2,6 +2,7 @@ import CustomContextPad from './CustomContextPad';
 import CustomPalette from './CustomPalette';
 import CustomRenderer from './CustomRenderer';
 import CustomPropertiesProvider from './CustomPropertiesProvider';
+import CustomRules from './CustomRules';
 
 
 export default {
@@ -9,5 +10,6 @@ export default {
   customContextPad: [ 'type', CustomContextPad ],
   customPalette: [ 'type', CustomPalette ],
   customRenderer: [ 'type', CustomRenderer ],
-  customPropertiesProvider: [ 'type', CustomPropertiesProvider ]
+  customPropertiesProvider: [ 'type', CustomPropertiesProvider ],
+  customRules: [ 'type', CustomRules ]
 };
