@@ -15,8 +15,6 @@ import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js
 
 import diagramXML from '../resources/diagram.bpmn';
 
-import qaExtension from '../resources/qa';
-
 import secExtension from '../resources/sec';
 
 import customModule from './custom';
@@ -38,8 +36,7 @@ var bpmnModeler = new BpmnModeler({
     customModule
   ],
   moddleExtensions: {
-    qa: qaExtension,
-	sec: secExtension
+    sec: secExtension
   }
 });
 container.removeClass('with-diagram');

@@ -62,6 +62,7 @@ export default class CustomRenderer extends BaseRenderer {
     return is(element, 'bpmn:TextAnnotation') ||
     is(element, 'bpmn:DataObjectReference') ||
     is(element, 'bpmn:DataStoreReference') ||
+    is(element, 'bpmn:MessageFlow') ||
     is(element, 'bpmn:Task');
 
 
@@ -144,7 +145,7 @@ export default class CustomRenderer extends BaseRenderer {
     } else {
       shape = this.bpmnRenderer.drawShape(parentNode, element);
       if (onChainExecution) {
-        drawChain(parentNode, element.width, element.height);
+        drawChain(parentNode, element.width/2, element.height/2);
       } else if (!isNil(onChainData)){
         if (onChainData!='None') {
           drawChain(parentNode, element.width, element.height);
