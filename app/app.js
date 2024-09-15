@@ -114,24 +114,7 @@ if (!window.FileList || !window.FileReader) {
 // bootstrap diagram functions
 
 $(function() {
-
-  $('#js-create-diagram').click(function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    createNewDiagram();
-  });
-
-  var downloadLink = $('#js-download-diagram');
-  var downloadSvgLink = $('#js-download-svg');
-
-  $('.buttons a').click(function(e) {
-    if (!$(this).is('.active')) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
+	
   function setEncoded(link, name, data) {
     var encodedData = encodeURIComponent(data);
 
@@ -144,6 +127,102 @@ $(function() {
       link.removeClass('active');
     }
   }
+  
+  var downloadLink = $('#js-download-diagram');
+  var downloadSecLink = $('#js-download-sec');
+  var downloadSvgLink = $('#js-download-svg');
+  var checkAttrLink = $('#js-check-attr');
+  var annotateLink = $('#js-annotate');
+  
+  
+
+  $('#js-create-diagram').click(function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    createNewDiagram();
+  });
+
+  
+  
+  downloadSecLink.click(async function(e) {
+	  setEncoded(downloadSecLink, 'diagram.bpmn', null);
+	  
+	  const { xml } = await bpmnModeler.saveXML({ format: true })
+	  
+	  let formData = new FormData();
+	  var strblob = new Blob([xml], {type: 'application/xml'});
+	  formData.append('file', strblob, 'diagram.bpmn');
+
+	  const resp = await fetch("http://localhost:8080/convert", {
+		method: "POST",
+		  body: formData
+		});
+		
+	  const responseText = await resp.text();
+
+
+      var strblob = new Blob([responseText], {type: 'application/xml'});
+
+	  
+	  // Create a new link element with the download attribute set to the desired filename
+		var link = document.createElement('a');
+		link.setAttribute('download', 'diagram.secbpmn2bc');
+
+		// Set the link's href attribute to the temporary URL
+		link.href = URL.createObjectURL(strblob);;
+
+		// Simulate a click on the link to trigger the download
+		document.body.appendChild(link);
+		link.click();
+
+		// Clean up the temporary URL and link element
+		document.body.removeChild(link);
+		
+		setEncoded(downloadSecLink, 'diagram.bpmn', strblob);  
+  });
+
+
+  checkAttrLink.click(async function(e) {
+	  setEncoded(checkAttrLink, 'diagram.bpmn', null);
+	  const { xml } = await bpmnModeler.saveXML({ format: true })
+	  
+	  let formData = new FormData();
+	  var strblob = new Blob([xml], {type: 'application/xml'});
+	  formData.append('file', strblob, 'diagram.bpmn');
+
+	  const resp = await fetch("http://localhost:8080/convert", {
+		method: "POST",
+		  body: formData
+		});
+		
+	  const responseText = await resp.text();
+
+	
+	  formData = new FormData();
+	  var strblob = new Blob([responseText], {type: 'application/xml'});
+	  formData.append('file', strblob, 'diagram.secbpmn2bc');
+
+	  const resp2 = await fetch("http://localhost:8080/check", {
+		method: "POST",
+		  body: formData
+		});
+		
+      const resp2text = await resp2.text();
+	  alert(resp2text.replace(/,/g, '\n'));
+	  setEncoded(checkAttrLink, 'diagram.bpmn', xml);
+	  
+  });
+
+  $('.buttons a').click(function(e) {
+    if (!$(this).is('.active')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+  
+  
+
 
   var exportArtifacts = debounce(async function() {
 
@@ -164,12 +243,46 @@ $(function() {
       const { xml } = await bpmnModeler.saveXML({ format: true });
 
       setEncoded(downloadLink, 'diagram.bpmn', xml);
+	  setEncoded(downloadSecLink, 'diagram.secbpmn2bc', xml);
+	  setEncoded(checkAttrLink, 'diagram.bpmn', xml);
+	  setEncoded(annotateLink, 'diagram.bpmn', xml);
+	  
     } catch (err) {
 
       console.log('Error happened saving XML: ', err);
 
       setEncoded(downloadLink, 'diagram.bpmn', null);
+	  setEncoded(downloadSecLink, 'diagram.secbpmn2bc', null);
+	  setEncoded(checkAttrLink, 'diagram.bpmn', null);
+	  setEncoded(annotateLink, 'diagram.bpmn', null);
+	  
     }
+	
+	/*
+	try {
+
+      const { xml } = await bpmnModeler.saveXML({ format: true })
+	  
+	  let formData = new FormData();
+	  var strblob = new Blob([xml], {type: 'application/xml'});
+	  formData.append('file', strblob, 'diagram.bpmn');
+
+	  const resp = await fetch("http://localhost:8080/convert", {
+		method: "POST",
+		  body: formData
+		});
+		
+	  const responseText = await resp.text();
+		
+	  //setEncoded(downloadSec, 'diagram.secbpmn2bc', responseText);
+
+    } catch (err) {
+
+      console.log('Error happened saving XML: ', err);
+
+      //setEncoded(downloadSec, 'diagram.secbpmn2bc', null);
+    }
+	*/
   }, 500);
 
   bpmnModeler.on('commandStack.changed', exportArtifacts);
