@@ -128,15 +128,31 @@ function OnChainExecution(props) {
   };
 
   const setValue = value => {
+	if(value == '') {
     return modeling.updateProperties(element, {
+      onChainExecution: null
+    });} else {
+      return modeling.updateProperties(element, {
       onChainExecution: value
     });
+	}
   };
 
-  return html`<${CheckboxEntry}
+  const getOptions = (element) => {
+    const options = [
+      { value: 'true', label: translate('True') },
+      { value: 'false', label: translate('False') },
+	  { value: '', label: translate('(unset)') }
+      
+    ];
+    return options;
+  };
+
+  return html`<${SelectEntry}
     id=${id}
     element=${element}
     label=${translate('OnChainExecution')}
+    getOptions=${getOptions}
     getValue=${getValue}
     setValue=${setValue}
     debounce=${debounce}
@@ -155,19 +171,36 @@ function OnChainModel(props) {
   };
 
   const setValue = value => {
+	if(value == '') {
     return modeling.updateProperties(element, {
+      onChainModel: null
+    });} else {
+      return modeling.updateProperties(element, {
       onChainModel: value
     });
+	}
   };
 
-  return html`<${CheckboxEntry}
+  const getOptions = (element) => {
+    const options = [
+      { value: 'true', label: translate('True') },
+      { value: 'false', label: translate('False') },
+	  { value: '', label: translate('(unset)') }
+      
+    ];
+    return options;
+  };
+
+  return html`<${SelectEntry}
     id=${id}
     element=${element}
     label=${translate('OnChainModel')}
+    getOptions=${getOptions}
     getValue=${getValue}
     setValue=${setValue}
     debounce=${debounce}
   />`;
+
 }
 
 function OnChainData(props) {
@@ -221,15 +254,21 @@ function BlockchainType(props) {
   };
 
   const setValue = value => {
+	if(value == '') {
     return modeling.updateProperties(element, {
+      blockchainType: null
+    });} else {
+      return modeling.updateProperties(element, {
       blockchainType: value
     });
+	}
   };
 
   const getOptions = (element) => {
     const options = [
       { value: 'Public', label: translate('Public') },
-      { value: 'Private', label: translate('Private') }
+      { value: 'Private', label: translate('Private') },
+	  { value: '', label: translate('(unset)') }
       
     ];
     return options;
