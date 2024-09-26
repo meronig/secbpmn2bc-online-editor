@@ -15,7 +15,7 @@
         {
           "name": "onChainExecution",
           "isAttr": true,
-          "type": "Boolean"
+          "type": "String"
         }
       ]
     },
@@ -28,7 +28,7 @@
         {
           "name": "onChainModel",
           "isAttr": true,
-          "type": "Boolean"
+          "type": "String"
         }
       ]
     },
@@ -41,7 +41,7 @@
         {
           "name": "onChainModel",
           "isAttr": true,
-          "type": "Boolean"
+          "type": "String"
         }
       ]
     },
@@ -54,7 +54,7 @@
         {
           "name": "onChainModel",
           "isAttr": true,
-          "type": "Boolean"
+          "type": "String"
         },
         {
           "name": "blockchainType",

@@ -144,7 +144,7 @@ export default class CustomRenderer extends BaseRenderer {
       }
     } else {
       shape = this.bpmnRenderer.drawShape(parentNode, element);
-      if (onChainExecution) {
+      if (onChainExecution=='true') {
         drawChain(parentNode, element.width/2, element.height/2);
       } else if (!isNil(onChainData)){
         if (onChainData!='None') {

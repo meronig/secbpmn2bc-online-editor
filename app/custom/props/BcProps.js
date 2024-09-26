@@ -215,9 +215,14 @@ function OnChainData(props) {
   };
 
   const setValue = value => {
+	if(value == '') {
     return modeling.updateProperties(element, {
+      onChainData: null
+    });} else {
+      return modeling.updateProperties(element, {
       onChainData: value
     });
+	}
   };
 
   const getOptions = (element) => {
@@ -225,7 +230,8 @@ function OnChainData(props) {
       { value: 'None', label: translate('None') },
       { value: 'Digest', label: translate('Digest') },
       { value: 'Encrypted', label: translate('Encrypted') },
-      { value: 'Unencrypted', label: translate('Unencrypted') }
+      { value: 'Unencrypted', label: translate('Unencrypted') },
+      { value: '', label: translate('(unset)') }
       
     ];
     return options;
