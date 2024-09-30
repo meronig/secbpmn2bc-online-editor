@@ -19,6 +19,7 @@ import secExtension from '../resources/sec';
 
 import customModule from './custom';
 
+import yesno from "yesno-dialog";
 
 
 var container = $('#js-drop-zone');
@@ -211,6 +212,69 @@ $(function() {
       const resp2text = await resp2.text();
 	  alert(resp2text.replace(/,/g, '\n'));
 	  setEncoded(checkAttrLink, 'diagram.bpmn', xml);
+	  
+  });
+
+  annotateLink.click(async function(e) {
+	  setEncoded(annotateLink, 'diagram.bpmn', null);
+	  
+	  //let preserve = confirm("Do you want to preserve the values currently assigned to blockchain properties?");
+	  let preserve = await yesno({
+		labelYes: "Yes",
+		labelNo: "No",
+		bodyText: "Do you want to preserve the values currently assigned to blockchain properties?"
+	  });
+	  
+	  const { xml } = await bpmnModeler.saveXML({ format: true })
+	  
+	  let formData = new FormData();
+	  var bpmnblob = new Blob([xml], {type: 'application/xml'});
+	  formData.append('file', bpmnblob, 'diagram.bpmn');
+
+	  const resp = await fetch("http://localhost:8080/convert", {
+		method: "POST",
+		  body: formData
+		});
+		
+	  const responseText = await resp.text();
+
+	  formData = new FormData();
+	  var secbpmnblob = new Blob([responseText], {type: 'application/xml'});
+	  formData.append('file', secbpmnblob, 'diagram.secbpmn2bc');
+	  formData.append('override', !preserve);
+	  
+	  const resp2 = await fetch("http://localhost:8080/annotate", {
+		method: "POST",
+		  body: formData
+		});
+		
+      const resp2text = await resp2.text();
+	
+	  /* handle fatals */
+	  if(Array.from(resp2text)[0] == '<') {
+	  
+	  
+		formData = new FormData();
+		var secbpmnblob = new Blob([resp2text], {type: 'application/xml'});
+		formData.append('bpmnfile', bpmnblob, 'diagram.bpmn');
+		formData.append('secbpmnfile', secbpmnblob, 'diagram.secbpmn2bc');
+		  
+		const resp3 = await fetch("http://localhost:8080/updateModel", {
+			method: "POST",
+			  body: formData
+			});
+			
+		const resp3text = await resp3.text();
+		  
+		var strblob = new Blob([resp2text], {type: 'application/xml'});
+		
+		openDiagram(resp3text);
+	  
+	  } else {
+		alert(resp2text.replace(/,/g, '\n'));
+	  }
+	  setEncoded(annotateLink, 'diagram.bpmn', xml);
+	    
 	  
   });
 
