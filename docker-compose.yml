@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  secbpmn2bc-fe:
+    build: .
+    image: secbpmn2bc/secbpmn2bc-fe:v1
+    ports:
+      - "8081:8080"
+    depends_on:
+      - secbpmn2bc-be
+    
+  secbpmn2bc-be:
+    image: secbpmn2bc/secbpmn2bc-be:v1
+    ports:
+      - "8080:8080"
