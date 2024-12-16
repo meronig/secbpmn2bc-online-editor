@@ -21,6 +21,8 @@ import customModule from './custom';
 
 import yesno from "yesno-dialog";
 
+var be_endpoint = "http://localhost:8080";
+
 
 var container = $('#js-drop-zone');
 
@@ -155,7 +157,7 @@ $(function() {
 	  var strblob = new Blob([xml], {type: 'application/xml'});
 	  formData.append('file', strblob, 'diagram.bpmn');
 
-	  const resp = await fetch("http://localhost:8080/convert", {
+	  const resp = await fetch(be_endpoint+"/convert", {
 		method: "POST",
 		  body: formData
 		});
@@ -192,7 +194,7 @@ $(function() {
 	  var strblob = new Blob([xml], {type: 'application/xml'});
 	  formData.append('file', strblob, 'diagram.bpmn');
 
-	  const resp = await fetch("http://localhost:8080/convert", {
+	  const resp = await fetch(be_endpoint+"/convert", {
 		method: "POST",
 		  body: formData
 		});
@@ -204,7 +206,7 @@ $(function() {
 	  var strblob = new Blob([responseText], {type: 'application/xml'});
 	  formData.append('file', strblob, 'diagram.secbpmn2bc');
 
-	  const resp2 = await fetch("http://localhost:8080/check", {
+	  const resp2 = await fetch(be_endpoint+"/check", {
 		method: "POST",
 		  body: formData
 		});
@@ -231,7 +233,7 @@ $(function() {
 	  var bpmnblob = new Blob([xml], {type: 'application/xml'});
 	  formData.append('file', bpmnblob, 'diagram.bpmn');
 
-	  const resp = await fetch("http://localhost:8080/convert", {
+	  const resp = await fetch(be_endpoint+"/convert", {
 		method: "POST",
 		  body: formData
 		});
@@ -243,7 +245,7 @@ $(function() {
 	  formData.append('file', secbpmnblob, 'diagram.secbpmn2bc');
 	  formData.append('override', !preserve);
 	  
-	  const resp2 = await fetch("http://localhost:8080/annotate", {
+	  const resp2 = await fetch(be_endpoint+"/annotate", {
 		method: "POST",
 		  body: formData
 		});
@@ -259,7 +261,7 @@ $(function() {
 		formData.append('bpmnfile', bpmnblob, 'diagram.bpmn');
 		formData.append('secbpmnfile', secbpmnblob, 'diagram.secbpmn2bc');
 		  
-		const resp3 = await fetch("http://localhost:8080/updateModel", {
+		const resp3 = await fetch(be_endpoint+"/updateModel", {
 			method: "POST",
 			  body: formData
 			});
