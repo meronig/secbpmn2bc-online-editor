@@ -26,4 +26,6 @@ docker-compose start
 * SecBPMN2BC Online Editor will be accessible on localhost at port 8081
 
 # Acknowledgements
+Copyright © 2022-2024 Technical University of Denmark
+
 SecBPMN2BC Online Editor has been developed as part of the project "Improving Business Processes with Blockchain: Model-driven Generation of Secure Smart Contract Code", funded by Copenhagen Fintech: https://www.copenhagenfintech.dk/projects/improving-business-processes-with-blockchain
