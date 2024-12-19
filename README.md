@@ -9,8 +9,8 @@ SecBPMN2BC REST Service:
 * Clone SecBPMN2BC REST Service repository and generate PASO docker image:
 
 ```
-git clone https://github.com/meronig/SecBPMN2BC.git
-cd SecBPMN2BC/deployment
+git clone https://github.com/meronig/secbpmn2bc-rest-service.git
+cd secbpmn2bc-rest-service/deployment
 docker-compose create
 ```
 
