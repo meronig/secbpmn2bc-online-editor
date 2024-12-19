@@ -1,3 +1,11 @@
+/*
+ *
+ * Copyright © 2024 Technical University of Denmark
+ * 
+ * This version of the software was developed by Giovanni Meroni, Assistant Professor, DTU Compute 
+ *
+ */
+
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var path = require('path');

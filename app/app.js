@@ -1,3 +1,11 @@
+/*
+ *
+ * Copyright © [YYYY] Technical University of Denmark
+ * 
+ * This version of the software was developed by Giovanni Meroni, Assistant Professor, DTU Compute 
+ *
+ */
+
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-js.css';
 
@@ -103,9 +111,6 @@ function registerFileDrop(container, callback) {
 }
 
 
-// file drag / drop ///////////////////////
-
-// check file api availability
 if (!window.FileList || !window.FileReader) {
   window.alert(
     'Looks like you use an older browser that does not support drag and drop. ' +
@@ -220,7 +225,6 @@ $(function() {
   annotateLink.click(async function(e) {
 	  setEncoded(annotateLink, 'diagram.bpmn', null);
 	  
-	  //let preserve = confirm("Do you want to preserve the values currently assigned to blockchain properties?");
 	  let preserve = await yesno({
 		labelYes: "Yes",
 		labelNo: "No",
@@ -323,32 +327,6 @@ $(function() {
 	  setEncoded(annotateLink, 'diagram.bpmn', null);
 	  
     }
-	
-	/*
-	try {
-
-      const { xml } = await bpmnModeler.saveXML({ format: true })
-	  
-	  let formData = new FormData();
-	  var strblob = new Blob([xml], {type: 'application/xml'});
-	  formData.append('file', strblob, 'diagram.bpmn');
-
-	  const resp = await fetch("http://localhost:8080/convert", {
-		method: "POST",
-		  body: formData
-		});
-		
-	  const responseText = await resp.text();
-		
-	  //setEncoded(downloadSec, 'diagram.secbpmn2bc', responseText);
-
-    } catch (err) {
-
-      console.log('Error happened saving XML: ', err);
-
-      //setEncoded(downloadSec, 'diagram.secbpmn2bc', null);
-    }
-	*/
   }, 500);
 
   bpmnModeler.on('commandStack.changed', exportArtifacts);

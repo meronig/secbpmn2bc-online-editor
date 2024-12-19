@@ -1,7 +1,11 @@
-const SUITABILITY_SCORE_HIGH = 100,
-      SUITABILITY_SCORE_AVERGE = 50,
-      SUITABILITY_SCORE_LOW = 25;
-	 
+/*
+ *
+ * Copyright © 2024 Technical University of Denmark
+ * 
+ * This version of the software was developed by Giovanni Meroni, Assistant Professor, DTU Compute 
+ *
+ */
+
 import accountability from './shapes/accountability.svg';
 
 export default class CustomPalette {

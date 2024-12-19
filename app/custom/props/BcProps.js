@@ -1,6 +1,14 @@
+/*
+ *
+ * Copyright © 2024 Technical University of Denmark
+ * 
+ * This version of the software was developed by Giovanni Meroni, Assistant Professor, DTU Compute 
+ *
+ */
+
 import { html } from 'htm/preact';
 
-import { TextFieldEntry, CheckboxEntry, SelectEntry, isTextFieldEntryEdited } from '@bpmn-io/properties-panel';
+import { SelectEntry, isTextFieldEntryEdited } from '@bpmn-io/properties-panel';
 import { useService } from 'bpmn-js-properties-panel';
 
 import { is } from 'bpmn-js/lib/util/ModelUtil';

@@ -1,3 +1,11 @@
+/*
+ *
+ * Copyright © 2024 Technical University of Denmark
+ * 
+ * This version of the software was developed by Giovanni Meroni, Assistant Professor, DTU Compute 
+ *
+ */
+
 import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer';
 import accountability from './shapes/accountability.svg';
 import auditability from './shapes/auditability.svg';
@@ -24,15 +32,8 @@ import chain from './shapes/chain.svg';
 
 import {
   append as svgAppend,
-  attr as svgAttr,
-  classes as svgClasses,
   create as svgCreate,
-  remove as svgRemove
 } from 'tiny-svg';
-
-import {
-  getRoundRectPath
-} from 'bpmn-js/lib/draw/BpmnRenderUtil';
 
 import {
   is,
@@ -41,12 +42,7 @@ import {
 
 import { isNil } from 'min-dash';
 
-const HIGH_PRIORITY = 1500,
-  TASK_BORDER_RADIUS = 2,
-  COLOR_GREEN = '#52B415',
-  COLOR_YELLOW = '#ffc800',
-  COLOR_RED = '#cc0000';
-
+const HIGH_PRIORITY = 1500;
 
 export default class CustomRenderer extends BaseRenderer {
   constructor(eventBus, bpmnRenderer) {
@@ -57,8 +53,6 @@ export default class CustomRenderer extends BaseRenderer {
 
   canRender(element) {
 
-    // ignore labels
-    //return !element.labelTarget;
     return is(element, 'bpmn:TextAnnotation') ||
     is(element, 'bpmn:DataObjectReference') ||
     is(element, 'bpmn:DataStoreReference') ||
@@ -185,11 +179,7 @@ export default class CustomRenderer extends BaseRenderer {
 
 CustomRenderer.$inject = ['eventBus', 'bpmnRenderer'];
 
-// helpers //////////
-
-// copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
 function drawBCAnnotation(parentNode, width, height, type) {
-
 
   const rect = svgCreate('image', {
     x: 0,
@@ -217,9 +207,5 @@ function drawChain(parentNode, width, height) {
   svgAppend(parentNode, rect);
 
   return rect;
-}
-
-function prependTo(newNode, parentNode, siblingNode) {
-  parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild);
 }
 
