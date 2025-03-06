@@ -9,6 +9,7 @@ import bcProps from './props/BcProps';
 
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 
+const LOW_PRIORITY = 500;
 
 export default function CustomPropertiesProvider(propertiesPanel, translate) {
 
