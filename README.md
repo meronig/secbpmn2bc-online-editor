@@ -3,10 +3,7 @@ SecBPMN2BC Online Editor is a web-based graphical frontend for the SecBPMN2BC fr
 
 This tool is publicly accessible at secbpmn2bc.compute.dtu.dk
 
-## Prerequisites
-SecBPMN2BC REST Service: 
-
-## Local deployment
+# Local deployment
 
 * Make sure to have Java 8.0, Eclipse, and Node.js 16 (or greater) properly installed and configured on your computer
 
@@ -33,7 +30,7 @@ npm run dev
 
 
 
-## Deployment with Docker
+# Deployment with Docker
 
 * Make sure to have Java 8.0 and Eclipse properly installed and configured on your computer
 
