@@ -1,6 +1,8 @@
 # SecBPMN2BC Online Editor
 SecBPMN2BC Online Editor is a web-based graphical frontend for the SecBPMN2BC framework
 
+This tool is publicly accessible at secbpmn2bc.compute.dtu.dk
+
 ## Prerequisites
 SecBPMN2BC REST Service: 
 
@@ -65,7 +67,7 @@ docker-compose start
 
 # Troubleshooting
 
-SecBPMN2BC Online Editor assumes that the backend runs on the same host. If this is not the case (e.g., you are deploying the backend on a different machine, you will have to change the variable be_endpoint inside app/app.js
+SecBPMN2BC Online Editor assumes that the backend runs on the same host as the frontend. If this is not the case (e.g., you are deploying the backend on a different machine) you will have to change the variable be_endpoint inside app/app.js
 
 # Acknowledgements
 Copyright © 2022-2025 Technical University of Denmark
